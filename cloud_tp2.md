@@ -78,3 +78,13 @@ az vm create --resource-group Tk\_ressources --name ma\_vm\_cloudinit --image Ub
 
 
 
+\# verification du bon fonctionnement de cloud-init
+
+ssh tk@172.161.95.92
+
+sudo systemctl status cloud-init
+
+cloud-init status
+
+ls -al /var/log/cloud-init\*
+
