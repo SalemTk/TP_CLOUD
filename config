@@ -1,0 +1,17 @@
+Host jobless
+  HostName 74.161.40.87
+  User jobless
+  Port 22
+  IdentityFile /Users/tosss/.ssh/cloud_tp
+  StrictHostKeyChecking no
+
+Host az1
+    HostName 172.161.167.27
+    User tk
+    IdentityFile ~/.ssh/cloud_tp
+
+Host az2
+    HostName 172.17.0.5
+    User tk
+    IdentityFile ~/.ssh/cloud_tp
+    ProxyJump az1
