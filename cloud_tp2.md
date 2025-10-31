@@ -271,6 +271,26 @@ cat /opt/meow/.env
 
 
 
+\# Secret Flask
+
+
+
+openssl rand -base64 32
+
+az keyvault secret set --vault-name meowVault --name FLASKSECRETKEY --value "fbPmk+zc8Dtasx/AagkgR0Hkmj+QO1kcVFIOfxym0qE="
+
+az keyvault secret show --vault-name salem-vault --name FLASKSECRETKEY
+
+
+
+FLASK\_SECRET\_KEY=$(az keyvault secret show --vault-name meowVault --name FLASKSECRETKEY --query value -o tsv)
+
+sed -i "s/^FLASK\_SECRET\_KEY=.\*/FLASK\_SECRET\_KEY=$FLASK\_SECRET\_KEY/" "$ENV\_FILE"
+
+
+
+
+
 
 
 
