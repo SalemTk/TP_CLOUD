@@ -134,5 +134,19 @@ runcmd:
 
 &nbsp; - mysql -e "GRANT ALL PRIVILEGES ON meow\_database.\* TO 'meow'@'%';"
 
-&nbsp; - mysql -e "FLUSH PRIVILEGES;" 
+&nbsp; - mysql -e "FLUSH PRIVILEGES;"
+
+
+
+\# creation de la nouvelle vm
+
+az vm create --resource-group Tk\_ressources --name azure2\_tp2 --image Ubuntu2204 --custom-data "C:\\Users\\tosss\\.ssh\\cloud-init.txt" --ssh-key-values "C:\\Users\\tosss\\.ssh\\cloud\_tp.pub" --location switzerlandnorth --size Standard\_B1s
+
+
+
+ssh crack@172.161.31.178
+
+mysql -u meow -pmeow -h 127.0.0.1
+
+SHOW DATABASES; 
 
