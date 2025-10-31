@@ -88,3 +88,51 @@ cloud-init status
 
 ls -al /var/log/cloud-init\*
 
+
+
+
+
+
+
+\# Ajout d'un nouvel user
+
+\- name: crack
+
+&nbsp;   sudo: ALL=(ALL) NOPASSWD:ALL
+
+&nbsp;   groups: sudo
+
+&nbsp;   shell: /bin/bash
+
+&nbsp;   ssh\_authorized\_keys:
+
+&nbsp;     - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA2kd0T4xSrbiguOnBRSCV8kuiFtAFP8ZHSOPwtKpaLT tosss@Salem
+
+packages:
+
+&nbsp; - mysql-server
+
+&nbsp; - mysql-client
+
+
+
+runcmd:
+
+&nbsp; - systemctl enable mysql
+
+&nbsp; - systemctl start MySQL
+
+
+
+&nbsp; - for i in $(seq 1 30); do ss -lnp | grep -q ':3306' \&\& break || sleep 1; done
+
+&nbsp; 
+
+&nbsp; - mysql -e "CREATE DATABASE IF NOT EXISTS meow\_database;"
+
+&nbsp; - mysql -e "CREATE USER IF NOT EXISTS 'meow'@'%' IDENTIFIED BY 'meow';"
+
+&nbsp; - mysql -e "GRANT ALL PRIVILEGES ON meow\_database.\* TO 'meow'@'%';"
+
+&nbsp; - mysql -e "FLUSH PRIVILEGES;" 
+
