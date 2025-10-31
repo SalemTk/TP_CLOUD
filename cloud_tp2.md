@@ -243,3 +243,45 @@ sudo chown webapp:webapp /usr/local/bin/get\_secrets.sh
 
 sudo chmod 750 /usr/local/bin/get\_secrets.sh
 
+
+
+
+
+\#  Exécution automatique
+
+sudo nano /etc/systemd/system/webapp.service
+
+ExecStartPre=/usr/local/bin/get\_secrets.sh
+
+sudo systemctl daemon-reload
+
+sudo systemctl restart webapp.service
+
+
+
+sudo systemctl status webapp.service
+
+&nbsp;Process: 17429 ExecStartPre=/usr/local/bin/get\_secrets.sh (code=exited, status=0/SUCCESS)
+
+
+
+cat /opt/meow/.env
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
