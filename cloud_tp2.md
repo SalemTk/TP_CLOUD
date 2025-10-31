@@ -150,3 +150,96 @@ mysql -u meow -pmeow -h 127.0.0.1
 
 SHOW DATABASES; 
 
+
+
+
+
+
+
+
+
+\## Partie III
+
+\# Creation de KeyVault et du secret
+
+
+
+az keyvault create --name meowVault --resource-group Tk\_ressources --location switzerlandnorth --enable-rbac-authorization false
+
+
+
+ssh az1
+
+
+
+sudo apt update
+
+
+
+sudo apt install ca-certificates curl apt-transport-https lsb-release gnupg -y
+
+
+
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/microsoft.gpg
+
+AZ\_REPO=$(lsb\_release -cs)
+
+echo "deb \[arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $AZ\_REPO main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+
+
+
+sudo apt update
+
+sudo apt install azure-cli -y
+
+az version
+
+az login --identity --allow-no-subscriptions
+
+az keyvault secret show --vault-name meowVault --name "TestSecret"
+
+
+
+
+
+
+
+\# script:
+#!/bin/bash
+
+
+
+az login --identity --allow-no-subscriptions > /dev/null 2>\&1
+
+
+
+DB\_PASSWORD=$(az keyvault secret show --vault-name meowVault --name DBPASSWORD --query value -o tsv)
+
+
+
+ENV\_FILE="/opt/meow/.env"
+
+
+
+if \[ ! -f "$ENV\_FILE" ]; then
+
+&nbsp; echo "Erreur : fichier .env introuvable à $ENV\_FILE"
+
+&nbsp; exit 1
+
+fi
+
+
+
+sed -i "s/^DB\_PASSWORD=.\*/DB\_PASSWORD=${DB\_PASSWORD}/" "$ENV\_FILE"
+
+
+
+sudo nano get\_secrets.sh
+
+sudo mv get\_secrets.sh /usr/local/bin
+
+sudo chown webapp:webapp /usr/local/bin/get\_secrets.sh
+
+sudo chmod 750 /usr/local/bin/get\_secrets.sh
+
