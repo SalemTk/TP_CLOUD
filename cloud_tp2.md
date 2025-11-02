@@ -285,9 +285,47 @@ az keyvault secret show --vault-name salem-vault --name FLASKSECRETKEY
 
 FLASK\_SECRET\_KEY=$(az keyvault secret show --vault-name meowVault --name FLASKSECRETKEY --query value -o tsv)
 
-sed -i "s/^FLASK\_SECRET\_KEY=.\*/FLASK\_SECRET\_KEY=$FLASK\_SECRET\_KEY/" "$ENV\_FILE"
+sed -i "s|^FLASK\_SECRET\_KEY=.\*|FLASK\_SECRET\_KEY=${FLASK\_SECRET\_KEY}|" "$ENV\_FILE"
 
 
+
+sudo chown webapp:webapp /usr/local/bin/get\_secrets.sh
+
+sudo chmod 700 /usr/local/bin/get\_secrets.sh
+
+sudo -u webapp /usr/local/bin/get\_secrets.sh
+
+sudo cat /opt/meow/.env
+
+
+
+
+
+
+
+\## III
+
+\# Upload un fichier dans le Blob Container depuis azure2.tp2
+
+ssh tk@172.161.31.178
+
+
+
+sudo apt update
+
+curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/microsoft.gpg > /dev/null
+
+echo "deb \[arch=amd64] https://packages.microsoft.com/repos/azure-cli/ $(lsb\_release -cs) main" | sudo tee /etc/apt/sources.list.d/azure-cli.list
+
+sudo apt update
+
+sudo apt install azure-cli
+
+
+
+az login --identity
+
+echo "meow" > /tmp/meow.txt
 
 
 
