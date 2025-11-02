@@ -351,3 +351,10 @@ FLUSH PRIVILEGES;
 
 
 mysql -u backup -p
+
+## D
+
+ sudo useradd -m backup
+sudo chown backup:backup /usr/local/bin/db_backup.sh
+sudo chmod 700 /usr/local/bin/db_backup.sh
+sudo -u backup /usr/local/bin/db_backup.sh
