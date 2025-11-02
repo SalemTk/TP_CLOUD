@@ -277,7 +277,7 @@ cat /opt/meow/.env
 
 openssl rand -base64 32
 
-az keyvault secret set --vault-name meowVault --name FLASKSECRETKEY --value ""
+az keyvault secret set --vault-name meowVault --name FLASKSECRETKEY --value "fbPmk+zc8Dtasx/AagkgR0Hkmj+QO1kcVFIOfxym0qE="
 
 az keyvault secret show --vault-name salem-vault --name FLASKSECRETKEY
 
@@ -327,37 +327,14 @@ az login --identity
 
 echo "meow" > /tmp/meow.txt
 
-az storage blob upload --account-name salemstorage123 --container-name backups --name meow.txt --file /tmp/meow.txt --auth-mode login
-
-
-
-az login
-
-az storage blob download --account-name salemstorage123 --container-name backups --name meow.txt --file ./meow\_downloaded.txt --account-key ""
-
-cat meow\_downloaded.txt
 
 
 
 
 
-\# B-Utilisateur MySQL
 
 
 
-sudo mysql
-
-CREATE USER 'backup'@'localhost' IDENTIFIED BY '';
-
-GRANT SELECT, SHOW VIEW, LOCK TABLES ON meow\_database.\* TO 'backup'@'localhost';
-
-FLUSH PRIVILEGES;
-
-
-
-
-
-mysql -u backup -p
 
 
 
