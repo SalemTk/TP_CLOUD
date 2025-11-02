@@ -328,17 +328,26 @@ az login --identity
 echo "meow" > /tmp/meow.txt
 
 
+az storage blob upload --account-name salemstorage123 --container-name backups --name meow.txt --file /tmp/meow.txt --auth-mode login
+
+
+az login
+
+az storage blob download --account-name salemstorage123 --container-name backups --name meow.txt --file ./meow\_downloaded.txt --account-key ""
+
+cat meow\_downloaded.txt
 
 
 
+\# B-Utilisateur MySQL
+
+sudo mysql
+
+CREATE USER 'backup'@'localhost' IDENTIFIED BY '';
+
+GRANT SELECT, SHOW VIEW, LOCK TABLES ON meow\_database.\* TO 'backup'@'localhost';
+
+FLUSH PRIVILEGES;
 
 
-
-
-
-
-
-
-
-
-
+mysql -u backup -p
